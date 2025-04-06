@@ -6,19 +6,10 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $title = $_POST['title'] ?? '';
-    $author = $_POST['author'] ?? '';
-    $year = $_POST['year_of_publish'] ?? '';
-    $recommendations = $_POST['recommendations'] ?? '';
-    
-    if ($title && $author && $year) {
-        $pdo = getDbConnection();
-        $stmt = $pdo->prepare("INSERT INTO books (user_id, title, author, year_of_publish, recommendations) VALUES (?, ?, ?, ?, ?)");
-        $stmt->execute([$_SESSION['user_id'], $title, $author, $year, $recommendations]);
-        header('Location: dashboard.php');
-        exit();
-    }
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['book_id'])) {
+    $pdo = getDbConnection();
+    $stmt = $pdo->prepare("DELETE FROM books WHERE id = ? AND user_id = ?");
+    $stmt->execute([$_POST['book_id'], $_SESSION['user_id']]);
 }
 
 header('Location: dashboard.php');
