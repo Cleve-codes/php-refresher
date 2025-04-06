@@ -1,7 +1,25 @@
 <?php
+/**
+ * Database Configuration File
+ * 
+ * This file contains the database configuration and initialization.
+ * It sets up the SQLite database connection and creates the necessary tables
+ * if they don't already exist.
+ */
+
+// Database configuration constants
 define('DB_TYPE', 'sqlite');
 define('DB_FILE', __DIR__ . '/../database/bookmanager.db');
 
+/**
+ * Get Database Connection
+ * 
+ * Creates and returns a PDO connection to the SQLite database.
+ * Sets error mode to throw exceptions for better error handling.
+ * 
+ * @return PDO Database connection object
+ * @throws PDOException if connection fails
+ */
 function getDbConnection() {
     try {
         $pdo = new PDO("sqlite:" . DB_FILE);
@@ -12,7 +30,13 @@ function getDbConnection() {
     }
 }
 
-// Initialize database and create tables if they don't exist
+/**
+ * Initialize Database
+ * 
+ * Creates the necessary database tables if they don't exist:
+ * - users: Stores user authentication information
+ * - books: Stores book information with foreign key to users
+ */
 function initializeDatabase() {
     $pdo = getDbConnection();
     
@@ -24,7 +48,7 @@ function initializeDatabase() {
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP
     )");
 
-    // Create books table
+    // Create books table with foreign key to users
     $pdo->exec("CREATE TABLE IF NOT EXISTS books (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         user_id INTEGER NOT NULL,
@@ -37,5 +61,5 @@ function initializeDatabase() {
     )");
 }
 
-// Initialize the database
+// Initialize the database when this file is included
 initializeDatabase();

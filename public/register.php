@@ -1,18 +1,34 @@
 <?php
+/**
+ * Registration Page
+ * 
+ * Handles new user registration:
+ * - Displays registration form
+ * - Validates user input
+ * - Creates new user account with hashed password
+ * - Handles duplicate username errors
+ */
+
 require_once '../includes/init.php';
 
+// Process registration form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Get and sanitize form data
     $username = $_POST['username'] ?? '';
     $password = $_POST['password'] ?? '';
     
     if ($username && $password) {
         $pdo = getDbConnection();
         try {
+            // Hash password and create new user
             $stmt = $pdo->prepare("INSERT INTO users (username, password_hash) VALUES (?, ?)");
             $stmt->execute([$username, password_hash($password, PASSWORD_DEFAULT)]);
+            
+            // Redirect to login page after successful registration
             header('Location: login.php');
             exit();
         } catch (PDOException $e) {
+            // Handle duplicate username error
             $error = "Username already exists";
         }
     }
@@ -27,9 +43,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
     <div class="container">
         <h1>Register</h1>
+        <!-- Display error message if registration failed -->
         <?php if (isset($error)): ?>
-            <div class="error"><?php echo htmlspecialchars($error); ?></div>
+            <div class="error-message"><?php echo htmlspecialchars($error); ?></div>
         <?php endif; ?>
+        <!-- Registration form -->
         <form method="POST">
             <div class="form-group">
                 <label>Username:</label>

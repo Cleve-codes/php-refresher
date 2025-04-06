@@ -1,16 +1,30 @@
 <?php
+/**
+ * Login Page
+ * 
+ * Handles user authentication:
+ * - Displays login form
+ * - Validates user credentials
+ * - Creates user session on successful login
+ * - Shows error messages for invalid attempts
+ */
+
 require_once '../includes/init.php';
 
+// Process login form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Get and sanitize form data
     $username = $_POST['username'] ?? '';
     $password = $_POST['password'] ?? '';
     
     if ($username && $password) {
+        // Attempt to find user in database
         $pdo = getDbConnection();
         $stmt = $pdo->prepare("SELECT id, password_hash FROM users WHERE username = ?");
         $stmt->execute([$username]);
         $user = $stmt->fetch();
         
+        // Verify password and create session if valid
         if ($user && password_verify($password, $user['password_hash'])) {
             $_SESSION['user_id'] = $user['id'];
             header('Location: dashboard.php');
@@ -29,9 +43,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
     <div class="container">
         <h1>Login</h1>
+        <!-- Display error message if login failed -->
         <?php if (isset($error)): ?>
-            <div class="error"><?php echo htmlspecialchars($error); ?></div>
+            <div class="error-message"><?php echo htmlspecialchars($error); ?></div>
         <?php endif; ?>
+        <!-- Login form -->
         <form method="POST">
             <div class="form-group">
                 <label>Username:</label>

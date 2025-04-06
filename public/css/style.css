@@ -1,21 +1,25 @@
+/* Reset default styles */
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
+/* Base styles */
 body {
     font-family: Arial, sans-serif;
     line-height: 1.6;
     background-color: #f4f4f4;
 }
 
+/* Layout */
 .container {
     max-width: 1000px;
     margin: 0 auto;
     padding: 20px;
 }
 
+/* Header styles */
 .header {
     display: flex;
     justify-content: space-between;
@@ -23,6 +27,7 @@ body {
     margin-bottom: 20px;
 }
 
+/* Form styles */
 .form-group {
     margin-bottom: 15px;
 }
@@ -32,6 +37,7 @@ body {
     margin-bottom: 5px;
 }
 
+/* Form input styles */
 input[type="text"],
 input[type="password"],
 input[type="number"],
@@ -42,6 +48,7 @@ textarea {
     border-radius: 4px;
 }
 
+/* Button styles */
 button {
     background-color: #4CAF50;
     color: white;
@@ -55,11 +62,13 @@ button:hover {
     background-color: #45a049;
 }
 
+/* Error text style */
 .error {
     color: red;
     margin-bottom: 10px;
 }
 
+/* Book item card style */
 .book-item {
     background: white;
     padding: 15px;
@@ -68,10 +77,12 @@ button:hover {
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
+/* Book action buttons container */
 .book-actions {
     margin-top: 10px;
 }
 
+/* Button styles for actions */
 .btn {
     display: inline-block;
     padding: 5px 10px;
@@ -82,14 +93,36 @@ button:hover {
     margin-right: 10px;
 }
 
+/* Delete button specific style */
 .btn.delete {
     background-color: #f44336;
 }
 
+/* Logout button style */
 .logout-btn {
     color: white;
     background-color: #f44336;
     text-decoration: none;
     padding: 5px 10px;
     border-radius: 4px;
+}
+
+/* Error message style */
+.error-message {
+    background-color: #ffebee;
+    color: #c62828;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    border: 1px solid #ef9a9a;
+}
+
+/* Success message style */
+.success-message {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    border: 1px solid #a5d6a7;
 }
